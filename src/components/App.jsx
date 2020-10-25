@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 
 function App() {
-
-    // Create destructing for Array for first name, last name, and email
+	
+	// Declare a new state variable
 	const [contact, setContact] = useState({
 		fName: "",
 		lName: "",
@@ -18,25 +18,10 @@ function App() {
 
 		// create statefull
 		setContact((prevValue) => {
-			if (name === "fName") {
-				return {
-					fName: value,
-                    lName: prevValue.lName,
-                    email: prevValue.email
-				};
-			} else if (name === "lName") {
-				return {
-					fName: prevValue.fName,
-					lName: value,
-					email: prevValue.email,
-				};
-			} else if (name === "email") {
-				return {
-					fName: prevValue.fName,
-					lName: prevValue.lName,
-					email: value,
-				};
-			}
+			return {
+				...prevValue, // use spread operator
+				[name]: value,
+			};
 		});
 	}
 
@@ -45,7 +30,6 @@ function App() {
 			<h1>
 				Hello {contact.fName} {contact.lName}{" "}
 			</h1>
-			<p>{contact.email}</p>
 			<form>
 				<input
 					name="fName"
