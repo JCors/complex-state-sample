@@ -1,18 +1,59 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 
 function App() {
-    return (
-			<div className="container">
-				<h1>Hello</h1>
-				<form>
-					<input name="fName" placeholder="First Name" />
-					<input name="lName" placeholder="Last Name" />
-					<button>Submit</button>
-				</form>
-			</div>
-		);
+
+
+    const [fullName, setFullName] = useState({
+			fName: "",
+			lName: "",
+		});
+
+		// Create function for handleChange
+    function handleChange(event) {
+            
+			//apply destructing for the object
+			const { value, name } = event.target;
+
+			// create statefull
+			setFullName((prevValue) => {
+				if (name === "fName") {
+					return {
+						fName: value,
+						lName: prevValue.lName,
+					};
+				} else if (name === "lName") {
+					return {
+						fName: prevValue.fName,
+						lName: value,
+					};
+				}
+			});
+		}
+    
+	return (
+		<div className="container">
+			<h1>
+				Hello {fullName.fName} {fullName.lName}{" "}
+			</h1>
+			<form>
+				<input
+					name="fName"
+					onChange={handleChange}
+					placeholder="First Name"
+					value={fullName.fName}
+				/>
+                <input
+                    name="lName"
+                    onChange={handleChange}
+                    placeholder="Last Name"
+                    value={fullName.lName}
+				/>
+				<button>Submit</button>
+			</form>
+		</div>
+	);
 }
 
 export default App;
